@@ -2,4 +2,5 @@
 
 python version : 3.8.3  
 operational system: Microsoft Windows 10 - Home Single Language  
-exec: ```py -m src.public.main```  
+exec: 
+* on project's folder run: ```py -m src.public.main```  
