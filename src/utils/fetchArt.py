@@ -7,17 +7,19 @@ import json
 import ast
 import os
 from urllib.request import Request, urlopen
-import alphanumeric
+from . import alphanumeric
 import unidecode
 
 def fetchArt(gen):
     art = list()
+
     # For ignoring SSL certificate errors
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
 
     url  = 'https://www.vagalume.com.br/browse/style/' + gen + '.html'
+    
     # Making the website believe that you are accessing it using a mozilla browser
     req = Request(url, headers = { 'User-Agent' : 'Mozilla/5.0' })
     webpage = urlopen(req).read()

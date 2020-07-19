@@ -1,6 +1,6 @@
 import requests
 import unidecode
-import alphanumeric
+from . import alphanumeric
 
 #Fetch all lyrics from artist
 def fetchSongs(art):

@@ -5,10 +5,7 @@ from bs4 import BeautifulSoup
 import ssl
 import json
 import ast
-import os
 from urllib.request import Request, urlopen
-from fetchSongs import fetchSongs
-from fetchArt import fetchArt
 import os
 
 def writeJSON(path, song):
@@ -72,13 +69,3 @@ def writeSongs(art, songs, gen):
             print('Song \'' + song + ' \' is wrong.')
 
     print('———-Extraction of data is complete. Check json and txt files.———-')
-
-if __name__ == '__main__':
-    gen = "axe"
-    arts = fetchArt(gen)
-    for art in arts:
-        try:
-            songs = fetchSongs(art)
-            writeSongs(art, songs, gen)
-        except:
-            print(f'Artist {art} is wrong.')
