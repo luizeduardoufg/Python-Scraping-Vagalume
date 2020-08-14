@@ -4,6 +4,9 @@ from ..utils.fetchSongs import fetchSongs
 from ..utils.clearData import clearData
 
 def getSongs(gens = []):
+    if not gens:
+        print('Empty list')
+        return
     for gen in gens:
         print(f'Genrer: {gen}')
         arts = fetchArt(gen)

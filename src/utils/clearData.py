@@ -1,6 +1,6 @@
 import os
 import json
-from ..utils.languageDetc import lg_detect
+from langdetect import detect as lg_detect
 from ..utils.jsonCompact import compact as json_comptact
 
 #get all subfolders form directory
@@ -10,11 +10,23 @@ def getSubfolders(dir):
         subfolders.append(subfolder)
     return subfolders
 
+#only used in filter
 def onlyJson(mus):
     if mus.split('.')[1] == 'json':
         return True
     else:
         return False
+
+def verifyLanguage(mus_name, compact_mus, *args):
+    if lg_detect(compact_mus) != 'pt':
+        print(*args, mus_name)
+
+def openJSON(file, *args):
+    with open(file, encoding='utf8') as json_file:
+        data = json.load(json_file)
+        compact_mus = json_comptact(data['Lyrics'][0])
+        verifyLanguage(file, compact_mus, args)
+        
 
 def clearData():
     #get Gêneros path
@@ -36,15 +48,11 @@ def clearData():
             #filter only json songs
             mus_aux = filter(onlyJson, mus)
             for m in mus_aux:
-                # print(m)
-                # print(gen, art, m)
                 os.chdir(artDir)
                 try:
-                    with open(m, encoding='utf8') as json_file:
-                        data = json.load(json_file)
-                        compact_mus = json_comptact(data['Lyrics'][0])
-                        # print(compact_mus)
-                        if lg_detect(compact_mus) != 'pt':
-                            print(gen, art, m)
+                    openJSON(m, (gen, art))
                 except Exception as e:
                     print(e)
+                    awnser = input(f'Exception on song: {m}. Do you want do continue?')
+                    if awnser not in ('yes', 'y', 'ye', 's', 'sim', 'ok', ''):
+                        exit()
