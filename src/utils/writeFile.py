@@ -21,13 +21,14 @@ def writeSongs(art, songs, gen):
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
-
+    
     for song in songs:
         url =  'https://www.vagalume.com.br/' + art + '/' + song + '.html'
         try:
             # Making the website believe that you are accessing it using a mozilla browser
             req = Request(url, headers = { 'User-Agent' : 'Mozilla/5.0' })
             webpage = urlopen(req).read()
+            webpage = webpage.decode('utf-8').replace('<br>', '\n')
 
             # Creating a BeautifulSoup object of the html page for easy extraction of data.
             soup = BeautifulSoup(webpage, 'html.parser')
@@ -45,24 +46,24 @@ def writeSongs(art, songs, gen):
 
             #Save the json created with the file name as title + .json (same for txt)
             #Path of the json file inside Generos\nome-do-genero\nome-do-artista\nome-da-musica.json
-            json_path = os.path.join(os.getcwd(), f"Gêneros\\{gen}\\{art}\\{song}.json")
+            json_path = os.path.join(os.getcwd(), f"Generos\\{gen}\\{art}\\{song}.json")
 
             #Path of the json file inside Generos\nome-do-genero\nome-do-artista\nome-da-musica.txt
-            txt_path = os.path.join(os.getcwd(), f"Gêneros\\{gen}\\{art}\\{song}.txt")
+            txt_path = os.path.join(os.getcwd(), f"Generos\\{gen}\\{art}\\{song}.txt")
 
             #Path of the artist folder inside Generos\nome-do-genero
-            art_path = os.path.join(os.getcwd(), f"Gêneros\\{gen}\\{art}")
+            art_path = os.path.join(os.getcwd(), f"Generos\\{gen}\\{art}")
 
             #Boolean to verify if already exists a dir with the artist name
             art_dir = os.path.isdir(art_path)
 
             if art_dir:
                 writeJSON(json_path, song_json)
-                writeTXT(txt_path, song_json)
+                # writeTXT(txt_path, song_json)
             else:
                 os.makedirs(art_path)
                 writeJSON(json_path, song_json)
-                writeTXT(txt_path, song_json)
+                # writeTXT(txt_path, song_json)
 
             print("Writing song file: " + song)
         except:

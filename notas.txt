@@ -1,0 +1,7 @@
+análise quantitativa 
+n de artistas
+n de generos
+media da quantidade de palavras por artista, por genero e global
+media da quantidade de letras por artista, por genero e global
+media de sentenças (fechamento por sinais de pontuação !, ?, .) por artista, por genero e global
+	segmentação setencial (procurar scripts)
